@@ -1,7 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-
 void main() {
     FILE *input, *output;
     int line = 1, token_no = 0;
@@ -13,25 +13,24 @@ void main() {
 
     if (!input || !output) {
         printf("Error opening file\n");
-        return 1;
+        exit(0);
     }
 
     fprintf(output, "Line no.\tToken no.\tToken\t\tLexeme\n\n");
-
-    while ((ch = fgetc(input)) != EOF) {    
-        if (strchr("+-*/", ch)) 
+    while ((ch = fgetc(input)) != EOF) {
+        if (strchr("+-*/", ch))
             fprintf(output, "%7d\t%7d\tOperator\t%7c\n", line, token_no++, ch);
-        else if (strchr(";{}()?!@%", ch)) 
+        else if (strchr(";{}()?!@%", ch))
             fprintf(output, "%7d\t%7d\tSpecial symbol\t%7c\n", line, token_no++, ch);
-        else if (isdigit(ch)) 
+        else if (isdigit(ch))
             fprintf(output, "%7d\t%7d\tDigit\t\t%7c\n", line, token_no++, ch);
         else if (ch == '\n')
             line++;
         else if (isalpha(ch)) {
             int i = 0;
-            str[i++] = ch;
-            while (isalnum(ch = fgetc(input))) 
+            do {
                 str[i++] = ch;
+            } while (isalnum(ch = fgetc(input)));
             str[i] = '\0';
             ungetc(ch, input);
 
