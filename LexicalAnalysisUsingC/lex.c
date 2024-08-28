@@ -4,9 +4,7 @@
 
 int main() {
 	FILE *input, *output;
-	int l=1;
-	int t=0;
-	int j=0;
+	int l=1, t=0, j=0;
 	int i,flag;
 	char ch,str[20];
 	input = fopen("input.txt","r");
