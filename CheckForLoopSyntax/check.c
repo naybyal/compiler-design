@@ -3,68 +3,66 @@
 #include <string.h>
 #include <ctype.h>
 
-void isCorrect(char *str) {
-    int semicolon = 0, bracket1 = 0, bracket2 = 0, flag = 0;
-
-    // Trim leading and trailing spaces
-    char *start = str;
-    while (isspace((unsigned char)*start)) start++;
+void isCorrect(const char *str) {
+    // Trim leading spaces
+    while (isspace((unsigned char)*str)) str++;
 
     // Check if the string starts with "for("
-    if (strncmp(start, "for(", 4) != 0) {
+    if (strncmp(str, "for(", 4) != 0) {
         printf("Error: Missing 'for(' at the beginning.\n");
         return;
     }
-    start += 4;
+    str += 4; // Move past "for("
 
     // Find the closing parenthesis
-    char *end = strchr(start, ')');
-    if (end == NULL) {
+    const char *end = strchr(str, ')');
+    if (!end) {
         printf("Error: Missing closing parenthesis.\n");
         return;
     }
 
-    // Extract and trim the content between parentheses
-    char *content = strndup(start, end - start); // Duplicate the content between parentheses
-    if (content == NULL) {
+    // Extract and validate the content between parentheses
+    size_t content_length = end - str;
+    char *content = strndup(str, content_length);
+    if (!content) {
         perror("Error allocating memory");
         return;
     }
 
-    // Validate content structure
+    // Initialize semicolon counter
+    int semicolons = 0;
     char *token = strtok(content, ";");
-    if (token == NULL) {
-        printf("Error: Missing initialization part.\n");
+    while (token) {
+        semicolons++;
+        token = strtok(NULL, ";");
+    }
+
+    // Validate the number of semicolons
+    if (semicolons != 3) {
+        printf("Error: Incorrect number of semicolons.\n");
         free(content);
         return;
     }
 
-    // Validate initialization
-    if (strchr(token, '=') == NULL) {
+    // Reset the content and extract the initialization part
+    char *init = strtok(strdup(content), ";");
+    if (!strchr(init, '=')) {
         printf("Error: Missing assignment operator in initialization.\n");
         free(content);
         return;
     }
 
-    // Validate condition
-    token = strtok(NULL, ";");
-    if (token == NULL) {
+    // Extract the condition and increment parts
+    char *condition = strtok(NULL, ";");
+    if (!condition || strlen(condition) == 0) {
         printf("Error: Missing condition part.\n");
         free(content);
         return;
     }
 
-    // Validate increment
-    token = strtok(NULL, ";");
-    if (token == NULL) {
+    char *increment = strtok(NULL, ";");
+    if (!increment || strlen(increment) == 0) {
         printf("Error: Missing increment part.\n");
-        free(content);
-        return;
-    }
-
-    // Check for any extra tokens
-    if (strtok(NULL, ";") != NULL) {
-        printf("Error: Extra semicolons present.\n");
         free(content);
         return;
     }
@@ -75,44 +73,35 @@ void isCorrect(char *str) {
 
 int main(void) {
     char filename[256];
-    FILE *file;
-    char *code;
-    long length;
-
-    // Get filename from user
     printf("Enter the filename containing the `for` loop statement:\n");
-    fgets(filename, sizeof(filename), stdin);
-    filename[strcspn(filename, "\n")] = '\0'; // Remove newline character
+    if (!fgets(filename, sizeof(filename), stdin)) {
+        perror("Error reading filename");
+        return 1;
+    }
+    filename[strcspn(filename, "\n")] = '\0';
 
-    // Open the file
-    file = fopen(filename, "r");
+    FILE *file = fopen(filename, "r");
     if (!file) {
         perror("Error opening file");
         return 1;
     }
 
-    // Determine the file length
     fseek(file, 0, SEEK_END);
-    length = ftell(file);
+    long length = ftell(file);
     fseek(file, 0, SEEK_SET);
 
-    // Allocate memory for the file content
-    code = malloc(length + 1);
+    char *code = malloc(length + 1);
     if (!code) {
         perror("Error allocating memory");
         fclose(file);
         return 1;
     }
 
-    // Read the entire file content
     fread(code, 1, length, file);
-    code[length] = '\0'; // Null-terminate the string
+    code[length] = '\0';
     fclose(file);
 
-    // Validate the `for` loop
     isCorrect(code);
-
-    // Free allocated memory
     free(code);
 
     return 0;
