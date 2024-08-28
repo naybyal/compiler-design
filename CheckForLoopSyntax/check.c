@@ -2,58 +2,99 @@
 #include <string.h>
 #include <ctype.h>
 
-#define MAX_SIZE 1000
-
 int main() {
+    int i = 0, j = 0, limit, flag, count = 0;
     FILE *fp;
-    char ch;
-    char buffer[MAX_SIZE];
-    int i = 0;
-    int has_for = 0, has_open_paren = 0, has_close_paren = 0;
-    int has_open_brace = 0, has_close_brace = 0;
-    int semicolon_count = 0;
+    char ch, a[1000][100];
 
-    // Open the file
+    // Open the file for reading
     fp = fopen("test.c", "r");
-    if (!fp) {
+    if (fp == NULL) {
         perror("Error opening file");
         return 1;
     }
 
-    // Read file content into buffer
-    while ((ch = fgetc(fp)) != EOF && i < MAX_SIZE - 1) {
-        buffer[i++] = ch;
+    // Read characters from the file
+    while ((ch = fgetc(fp)) != EOF) {
+        if (isalnum(ch) || ch == '_' || ch == '=') {
+            a[i][j++] = ch;
+        } else {
+            if (j > 0) {
+                a[i][j] = '\0';
+                i++;
+                j = 0;
+            }
+            if (!isspace(ch)) {
+                a[i][0] = ch;
+                a[i][1] = '\0';
+                i++;
+            }
+        }
     }
-    buffer[i] = '\0'; // Null-terminate the string
+
     fclose(fp);
 
-    // Parse the buffer
-    for (i = 0; buffer[i] != '\0'; i++) {
-        if (strncmp(&buffer[i], "for", 3) == 0 && !isalnum(buffer[i + 3]) && buffer[i + 3] == ' ') {
-            has_for = 1;
+    limit = i;
+    flag = 0;
+
+    // Check for the 'for' keyword
+    for (i = 0; i < limit; i++) {
+        if (strcmp(a[i], "for") == 0) {
+            flag = 1;
+            break;
         }
-        if (buffer[i] == '(') has_open_paren = 1;
-        if (buffer[i] == ')') has_close_paren = 1;
-        if (buffer[i] == '{') has_open_brace = 1;
-        if (buffer[i] == '}') has_close_brace = 1;
-        if (buffer[i] == ';') semicolon_count++;
     }
 
-    // Syntax checking based on flags and counts
-    if (!has_for) {
-        printf("No 'for' Found!\n");
-    } else if (!has_open_paren) {
-        printf("Error: '(' Is Missing!\n");
-    } else if (!has_close_paren) {
-        printf("Error: ')' Is Missing!\n");
-    } else if (semicolon_count != 2) {
-        printf("Error: Incorrect number of ';'!\n");
-    } else if (!has_open_brace) {
-        printf("Error: '{' Is Missing!\n");
-    } else if (!has_close_brace) {
-        printf("Error: '}' Is Missing!\n");
+    if (flag) {
+        flag = 0;
+        while (i < limit && strcmp(a[i], ")") != 0) {
+            if (strcmp(a[i], "(") == 0) {
+                flag = 1;
+                break;
+            }
+            i++;
+        }
+
+        if (flag) {
+            flag = 0;
+            while (i < limit && strcmp(a[i], ")") != 0) {
+                if (strcmp(a[i], ";") == 0) count++;
+                i++;
+            }
+            if (count == 2) {
+                flag = 0;
+                while (i < limit && strcmp(a[i], "{") != 0) {
+                    if (strcmp(a[i], ")") == 0) {
+                        flag = 1;
+                        break;
+                    }
+                    i++;
+                }
+                if (flag) {
+                    flag = 0;
+                    while (i < limit) {
+                        if (strcmp(a[i], "}") == 0) {
+                            flag = 1;
+                            break;
+                        }
+                        i++;
+                    }
+                    if (flag) {
+                        printf("No Errors Found!\n");
+                    } else {
+                        printf("Error: } Is Missing!\n");
+                    }
+                } else {
+                    printf("Error: { Is Missing!\n");
+                }
+            } else {
+                printf("Error: ; Is Missing!\n");
+            }
+        } else {
+            printf("Error: ) Is Missing!\n");
+        }
     } else {
-        printf("No Errors Found!\n");
+        printf("No For Found!\n");
     }
 
     return 0;

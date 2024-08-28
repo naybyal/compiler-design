@@ -2,7 +2,8 @@
 int main()
 {
     int i, n;
-    for (i=0;i<n;i++)
+    for (i=0;i<n;i++){
+        printf("Hello, World!\n");
     }
     return 0;
 }
