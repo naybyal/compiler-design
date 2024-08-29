@@ -21,30 +21,27 @@ void isCorrect(const char *str) {
         return;
     }
 
-    // Extract and validate the content between parentheses
-    size_t content_length = end - str;
-    char *content = strndup(str, content_length);
+    // Check semicolons
+    int semicolons = 0;
+    char *content = strndup(str, end - str);
     if (!content) {
         perror("Error allocating memory");
         return;
     }
 
-    // Initialize semicolon counter
-    int semicolons = 0;
     char *token = strtok(content, ";");
     while (token) {
         semicolons++;
         token = strtok(NULL, ";");
     }
 
-    // Validate the number of semicolons
     if (semicolons != 3) {
         printf("Error: Incorrect number of semicolons.\n");
         free(content);
         return;
     }
 
-    // Reset the content and extract the initialization part
+    // Validate parts
     char *init = strtok(strdup(content), ";");
     if (!strchr(init, '=')) {
         printf("Error: Missing assignment operator in initialization.\n");
@@ -52,7 +49,6 @@ void isCorrect(const char *str) {
         return;
     }
 
-    // Extract the condition and increment parts
     char *condition = strtok(NULL, ";");
     if (!condition || strlen(condition) == 0) {
         printf("Error: Missing condition part.\n");
