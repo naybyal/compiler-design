@@ -24,8 +24,8 @@ int main() {
             buffer[i][j++] = ch;
         else {
             if (j > 0) {
-                buffer[i][j] = '\0'; // Null-terminate the string
-                j = 0; // Reset j for the next word
+                buffer[i][j] = '\0'; 
+                j = 0; 
                 i++;
             }
             if (ch != ' ' && ch != '\n' && ch != '\t') {
@@ -36,12 +36,12 @@ int main() {
     }
 
     fclose(fp); 
-    limit = i; // Total words read
+    limit = i; 
     flag = 0;
 
-    // Check for 'for' keyword
+
     for (i = 0; i < limit; i++) {
-        if (strcmp(buffer[i], "for") == 0) { // Use double quotes
+        if (strcmp(buffer[i], "for") == 0) { 
             flag = 1;
             break;
         }
@@ -107,5 +107,5 @@ int main() {
     } else  
         printf("\nError: Missing 'for'\n");
 
-    return 0; // Added return statement
+    return 0; 
 }
