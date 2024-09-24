@@ -28,3 +28,12 @@ To run the project, clone this repository and navigate to the desired module:
 ```bash
 git clone https://github.com/naybyal/compiler-design.git
 cd compiler-design
+```
+## Compile the C Files
+
+To compile the C files using a C compiler like `gcc`, use the following command:
+
+```bash
+gcc -o output filename.c
+```
+Replace filename.c with the appropriate source file.
