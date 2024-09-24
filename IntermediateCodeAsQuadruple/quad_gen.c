@@ -59,7 +59,8 @@ int main() {
             else if (inputString[i] == ')') {
                 while ((x = pop()) != '(')
                     postfixForm[k++] = x;
-            } else if (getPriority(inputString[i]) < getPriority(stack[top]))
+            } 
+            else if (getPriority(inputString[i]) < getPriority(stack[top]))
                 push(inputString[i]);
             else {
                 postfixForm[k++] = pop();
@@ -78,6 +79,7 @@ int main() {
     printf("Postfix Form\t\t->\t%s\n", postfixForm);
     printf("\n\t---QUADRUPLES---\n");
     printf("\nOperator\tArg1\tArg2\tResult\n");
+    
     for (i = 0, x = '0'; postfixForm[i] != '\0'; i++) {
         if (!isOperator(postfixForm[i])) {
             push(postfixForm[i]);
@@ -164,5 +166,4 @@ char pop() {
         return stack[top--];
     else
         return '$'; 
-    
 }
