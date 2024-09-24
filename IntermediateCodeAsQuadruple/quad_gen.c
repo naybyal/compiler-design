@@ -25,95 +25,94 @@
  *      gcc -o quad_gen quad_gen.c
  * 
  ******************************************************************************/
-
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-#define MAX 100
 
-char stack[MAX];
+char stack[100];
 int top = -1;
 
-int is_operator(char x);
-int precedence(char x);
+int isOperator(char x);
+int getPriority(char x);
 void push(char x);
 char pop();
 
 int main() {
-    int i, k = 0;
-    char expression[MAX], postfix[MAX], x;
+    int i, length, k;
+    char inputString[100], postfixForm[100], x, first, second, temp;
     
-    // Initialize stack with sentinel '$'
     push('$');
+    printf("Enter The Expression\t->\t");
+    scanf("%s", inputString);
     
-    printf("Enter the expression:\n");
-    fgets(expression, MAX, stdin);
+    length = strlen(inputString);
     
-    int len = strlen(expression);
+    // Handling unary minus
+    for (i = 0; i < length; i++) {
+        if (inputString[i] == '-' && (i == 0 || isOperator(inputString[i - 1]))) // If '-' comes first or comes before an operator
+            inputString[i] = '_'; // Denoting unary minus by underscore
+    }
     
-    // Replace unary minus with '_'
-    for (i = 0; i < len; i++) {
-        if (expression[i] == '-' && (i == 0 || is_operator(expression[i - 1]))) {
-            expression[i] = '_'; // Unary minus marked as '_'
+    // Convert to postfix
+    k = 0;
+    for (i = 0; i < length; i++) {
+        if (isOperator(inputString[i])) {
+            if (top <= 0 || stack[top] == '(' || inputString[i] == '(')
+                push(inputString[i]);
+            else if (inputString[i] == ')') {
+                while ((x = pop()) != '(')
+                    postfixForm[k++] = x;
+            } else if (getPriority(inputString[i]) < getPriority(stack[top]))
+                push(inputString[i]);
+            else {
+                postfixForm[k++] = pop();
+                push(inputString[i]);
+            }
+        } else {
+            postfixForm[k++] = inputString[i];
         }
     }
     
-    // Convert infix to postfix
-    for (i = 0; i < len; i++) {
-        if (is_operator(expression[i])) {
-            if (top <= 0 || stack[top] == '(' || expression[i] == '(') {
-                push(expression[i]);
-            } else if (expression[i] == ')') {
-                while ((x = pop()) != '(') {
-                    postfix[k++] = x;
+    while ((x = pop()) != '$')
+        postfixForm[k++] = x;
+    
+    postfixForm[k++] = '\0';
+    
+    printf("Postfix Form\t\t->\t%s\n", postfixForm);
+    printf("\n\t---QUADRUPLES---\n");
+    printf("\nOperator\tArg1\tArg2\tResult\n");
+    for (i = 0, x = '0'; postfixForm[i] != '\0'; i++) {
+        if (!isOperator(postfixForm[i])) {
+            push(postfixForm[i]);
+        } else {
+            if (postfixForm[i] == '_' || postfixForm[i] == '=')
+                second = '_';
+            else
+                second = pop();
+            
+            first = pop();
+            
+            if (postfixForm[i] == '_') {
+                printf("%s\t\t%c\t%c\t%c\n", "UMinus", first, second, x);
+                push(x++);
+            } else {
+                if (postfixForm[i] == '=') {
+                    temp = pop();
+                    printf("%c\t\t%c\t%c\t%c\n", postfixForm[i], first, second, temp);
+                } else {
+                    printf("%c\t\t%c\t%c\t%c\n", postfixForm[i], first, second, x);
+                    push(x++);
                 }
-            } else if (precedence(expression[i]) > precedence(stack[top])) {
-                push(expression[i]);
-            } else {
-                postfix[k++] = pop();
-                push(expression[i]);
             }
-        } else {
-            postfix[k++] = expression[i];
         }
     }
-    
-    while ((x = pop()) != '$') {
-        postfix[k++] = x;
-    }
-    
-    postfix[k] = '\0';  
-    
-    // Display the postfix expression
-    printf("Postfix Form:\n%s\n", postfix);
-    
-    // Evaluate the postfix expression
-    printf("Quadruple Representation:\n");
-    printf("Operator\tArg1\tArg2\tResult\n");
-    char first, second, result = 't';
-    
-    for (i = 0; postfix[i] != '\0'; i++) {
-        if (!is_operator(postfix[i])) {
-            push(postfix[i]); // Push operands to stack
-        } else {
-            second = pop();  // Pop second operand
-            first = pop();   // Pop first operand
-
-            if (postfix[i] == '=') {
-                printf("%c\t\t%c\t\t%c", postfix[i], first, second);
-            } else {
-                printf("%c\t\t%c\t%c\t%c", postfix[i], first, second, result);
-                push(result++); 
-            }
-
-            printf("\n");
-        }
-    }
-
+    printf("\n");
     return 0;
 }
 
-int is_operator(char x) {
+
+int isOperator(char x) {
     switch (x) {
         case '(':
         case '_':
@@ -131,32 +130,43 @@ int is_operator(char x) {
     }
 }
 
-int precedence(char x) {
-    switch (x) {
-        case '^': return 3;
-        case '*':
+int getPriority(char x) {
+    switch(x) {
+        case '(':
+            return 0;
+        case '_':
+            return 1;
+        case '^':
+            return 2;
+        case '%':
+            return 3;
         case '/':
-        case '%': return 2;
+            return 4;
+        case '*':
+            return 5;
         case '+':
-        case '-': return 1;
-        case '=': return 0;
-        default: return -1;
+            return 6;
+        case '-':
+            return 7;
+        case ')':
+            return 8;
+        case '=':
+            return 9;
+        case '$':
+            return 10;
+        default:
+            return 11;
     }
 }
 
 void push(char x) {
-    if (top < MAX - 1) {
-        stack[++top] = x;
-    } else {
-        printf("Stack overflow\n");
-    }
+    stack[++top] = x;
 }
 
 char pop() {
-    if (top >= 0) {
+    if (top >= 0) 
         return stack[top--];
-    } else {
-        printf("Stack underflow\n");
-        return '$';  // Return sentinel if stack is empty
-    }
+    else
+        return '$'; 
+    
 }
