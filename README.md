@@ -14,12 +14,12 @@ This repository contains implementations of various components of a compiler, pr
 
 ## Directory Structure
 
-- `CheckForLoopSyntax/`: Syntax checks for loop constructs.
+- `CheckForLoopSyntax/`: Syntax analyzer for-loop constructs.
 - `DFA/`: Implementation of a Deterministic Finite Automaton.
 - `IntermediateCodeAsQuadruple/`: Module for generating quadruple representations.
 - `LexicalAnalysisUsingC/`: Lexer implementation.
 - `OperatorPrecedenceParser/`: Parser based on operator precedence.
-- `RecursiveDescentParser/`: Implements a recursive descent parsing approach.
+- `RecursiveDescentParser/`: Implements a recursive descent parser.
 
 ## Getting Started
 
