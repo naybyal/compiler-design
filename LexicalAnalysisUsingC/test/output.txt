@@ -15,7 +15,7 @@ Line no.	Token no.	Token		Lexeme
       5	     12	Unary Operator	      +
       5	     13	Unary Operator	      +
       5	     14	Special symbol	      ;
-      6	     15	Identifier	 printf
+      6	     15	Keyword	 printf
       6	     16	Special symbol	      (
       6	     17	Identifier	  Hello
       6	     18	Identifier	  World

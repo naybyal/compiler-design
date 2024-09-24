@@ -8,7 +8,7 @@ void main() {
     int line = 1, token_no = 0;
     char ch, prev_ch = ' '; 
     char str[20];
-    char keyword[6][10] = {"void", "main", "if", "else", "do", "while"};
+    char keyword[6][10] = {"void", "main", "if", "else", "printf", "while"};
 
     input = fopen("input.txt", "r");
     output = fopen("output.txt", "w");
