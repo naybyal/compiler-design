@@ -17,10 +17,6 @@
  *      t1 = a + b
  *      t2 = t1 * c
  * 
- * Example Output:
- *      ( + , a , b , t1 )
- *      ( * , t1 , c , t2 )
- * 
  * Compilation:
  *      gcc -o quad_gen quad_gen.c
  * 
