@@ -37,3 +37,11 @@ To compile the C files using a C compiler like `gcc`, use the following command:
 gcc -o output filename.c
 ```
 Replace filename.c with the appropriate source file.
+
+## Contributing
+
+Contributions are welcome! Feel free to submit issues or pull requests.
+
+## License
+
+This project is open-source and available under the MIT License.
