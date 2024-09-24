@@ -8,18 +8,16 @@ Line no.	Token no.	Token		Lexeme
       4	      5	Identifier	    int
       4	      6	Identifier	      a
       4	      7	Digit		      1
-      4	      8	Unary Operator	      +
-      4	      9	Digit		      1
-      4	     10	Special symbol	      ;
-      5	     11	Identifier	      a
-      5	     12	Unary Operator	      +
-      5	     13	Unary Operator	      +
-      5	     14	Special symbol	      ;
-      6	     15	Keyword	 printf
-      6	     16	Special symbol	      (
-      6	     17	Identifier	  Hello
-      6	     18	Identifier	  World
-      6	     19	Special symbol	      !
-      6	     20	Special symbol	      )
-      6	     21	Special symbol	      ;
-      7	     22	Special symbol	      }
+      4	      8	Operator	      +
+      4	      9	Special symbol	      ;
+      5	     10	Identifier	      a
+      5	     11	Unary Operator	      ++
+      5	     12	Special symbol	      ;
+      6	     13	Keyword	 printf
+      6	     14	Special symbol	      (
+      6	     15	Identifier	  Hello
+      6	     16	Identifier	  World
+      6	     17	Special symbol	      !
+      6	     18	Special symbol	      )
+      6	     19	Special symbol	      ;
+      7	     20	Special symbol	      }

@@ -6,7 +6,7 @@
 void main() {
     FILE *input, *output;
     int line = 1, token_no = 0;
-    char ch, prev_ch = ' '; 
+    char ch, next_ch = ' '; 
     char str[20];
     char keyword[6][10] = {"void", "main", "if", "else", "printf", "while"};
 
@@ -22,9 +22,9 @@ void main() {
     
     while ((ch = fgetc(input)) != EOF) {
         if (strchr("+-*/", ch)) {
-            if (ch == prev_ch) {
-                fprintf(output, "%7d\t%7d\tUnary Operator\t%7c\n", line, token_no++, ch);
-                // prev_ch = ch;
+            if (ch == (next_ch = fgetc(input))) {
+                fprintf(output, "%7d\t%7d\tUnary Operator\t%7c%c\n", line, token_no++, ch,ch);
+                // ungetc(next_ch, input);
             } else {
                 fprintf(output, "%7d\t%7d\tOperator\t%7c\n", line, token_no++, ch);
             }
@@ -59,8 +59,6 @@ void main() {
             }
             fprintf(output, "%7d\t%7d\t%s\t%7s\n", line, token_no++, is_keyword ? "Keyword" : "Identifier", str);
         }
-
-        prev_ch = ch;
     }
 
     fclose(input);
