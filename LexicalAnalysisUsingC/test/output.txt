@@ -1,11 +1,11 @@
 Line no.	Token no.	Token		Lexeme
 
-      3	      0	Identifier	   void
+      3	      0	Keyword	   void
       3	      1	Keyword	   main
       3	      2	Special symbol	      (
       3	      3	Special symbol	      )
       3	      4	Special symbol	      {
-      4	      5	Keyword	    int
+      4	      5	Identifier	    int
       4	      6	Identifier	      a
       4	      7	Digit		      1
       4	      8	Unary Operator	      +
