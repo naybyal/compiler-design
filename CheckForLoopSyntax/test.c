@@ -8,7 +8,7 @@
 #include <string.h>
 #include <ctype.h>
 
-int main() {
+void main() {
     int i = 0, j = 0, limit, flag, count = 0;
     FILE *fp;
     char buffer[100][100], ch;
@@ -106,6 +106,4 @@ int main() {
             printf("\nError: Missing (\n");
     } else  
         printf("\nError: Missing 'for'\n");
-
-    return 0; 
 }
