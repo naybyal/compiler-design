@@ -101,8 +101,8 @@ int main() {
     postfixForm[k++] = '\0'; 
 
     printf("Postfix : %s", postfixForm);
-    printf("\nOperator\tArg1\tArg2\n");
-    for (i=0, x='0'; postfixForm[i] != '\0'; i++) {
+    printf("\nOperator\tArg1\tArg2 (Result)\n");
+    for (i=0; postfixForm[i] != '\0'; i++) {
         if (!isOperator(postfixForm[i]))
             push(postfixForm[i]);
         else {
@@ -114,14 +114,14 @@ int main() {
 
             if (postfixForm[i] == '_') {
                 printf("%s\t%c\t%c\n", "Uminus", first, second);
-                push(x++);
+                push(second);
             } else {
                 if (postfixForm[i] == '=') {
                     temp = pop();
-                    printf("%c\t%c\t%c\n", postfixForm[i], first, second);
+                    printf("%c\t\t%c\t%c\n", postfixForm[i], first, temp);
                 } else {
-                    printf("%c\t%c\t%c\n", postfixForm[i], first, second);
-                    push(x++);
+                    printf("%c\t\t%c\t%c\n", postfixForm[i], first, second);
+                    push(second);
                 }
             }
         }
