@@ -75,7 +75,9 @@ int main() {
             inputString[i] = '_';
     }
     for (i=0; i<length; i++) {
+
         if (isOperator(inputString[i])) {
+
             if (top <= 0 || stack[top] == '(' || inputString[i] == '(') 
                 push(inputString[i]);
             else if (inputString[i] == ')') 
@@ -89,9 +91,9 @@ int main() {
                 postfixForm[k++] = pop();
                 push(inputString[i]);
             }
-        } else {
-            postfixForm[k++] = inputString[i];
-        }
+
+        } else postfixForm[k++] = inputString[i];
+        
     }
 
     while ((x = pop()) != '$')
