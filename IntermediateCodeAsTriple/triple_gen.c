@@ -79,7 +79,7 @@ int main() {
             if (top <= 0 || stack[top] == '(' || inputString[i] == '(') 
                 push(inputString[i]);
             else if (inputString[i] == ')') 
-                while ((x = pop()) != '()') 
+                while ((x = pop()) != '(') 
                     postfixForm[k++] = x;
             else if (inputString[i] == '_')
                 postfixForm[k++] = inputString[i];
