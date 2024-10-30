@@ -7,13 +7,7 @@
  *   - State 1 (q1): The accepting state. If the DFA ends in this state, the string is accepted.
  *   - State 2 (q2): An intermediate state.
  *
- * Transition Diagram:
- *      +-------+          0            +-------+          1          +-------+
- *      |       |---------------------->|       |--------------------->|       |
- *      |  q0   |                      |  q2   |                     |  q1   |
- *      |       |<----------------------+       |<--------------------+       |
- *      +-------+          1            +-------+          0          +-------+
- *
+ * Transitions :
  * - From `q0`: 
  *     - On input `0`, it transitions to `q2`.
  *     - On input `1`, it stays in `q0`.
