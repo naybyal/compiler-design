@@ -6,7 +6,7 @@ void main() {
 
     printf("Enter the expressions\n");
     for(i=0;i<5;i++) {
-        scanf("%s",&input[i]);
+        scanf("%s", input[i]);
     }
     
     for(k=0;k<5;k++) {
