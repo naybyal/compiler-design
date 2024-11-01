@@ -54,7 +54,7 @@ void constant() {
         // If both operands are digits or if the operator is '='
         if ((isdigit(arr[i].op1[0]) && isdigit(arr[i].op2[0])) || strcmp(arr[i].op, "=") == 0) {
             int op1 = atoi(arr[i].op1);
-            int op2 = isdigit(arr[i].op2[0]) ? atoi(arr[i].op2) : 0; // Check if op2 is a digit
+            int op2 = atoi(arr[i].op2); 
             int res;
             switch (arr[i].op[0]) {
                 case '+': res = op1 + op2; break;
@@ -66,7 +66,7 @@ void constant() {
             }
 
             char resStr[5];
-            sprintf(resStr, "%d", res);
+            sprintf(resStr, "%d", res); // converts int to a string
 
             arr[i].flag = 1; // Mark the expression as eliminated
             change(i, resStr); // Update further expressions with the result
