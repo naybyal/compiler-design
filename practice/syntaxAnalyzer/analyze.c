@@ -19,13 +19,14 @@ void main() {
         if (isalnum(ch)) {
             buffer[i][j++] = ch;
         } else {
+            if (ch != ' ' && ch != '\n'  && ch != '\t') {
+                buffer[i][0] = ch;
+                buffer[i][1]  = '\0';
+                i++;
+            }
             if (j > 0) {
                 buffer[i][j] = '\0';
                 j = 0; i++;
-            }
-            if (ch != ' ' && ch != '\n'  && ch != '\t') {
-                buffer[i][0] = ch;
-                buffer[i++][1]  = '\0';
             }
         }
     }
