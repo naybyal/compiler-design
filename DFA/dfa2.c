@@ -23,7 +23,7 @@ int main() {
     for (int i = 0; i < strlen(buffer); i++) {
         if (buffer[i] != '0' && buffer[i] != '1') {
             printf("\nInvalid input.\n");
-            error(0);
+            exit(0);
         }
     }
     state = 0;
