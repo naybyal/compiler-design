@@ -71,7 +71,7 @@ Canonical LR parsers, also known as LR(1) parsers, use LR(1) items that provide 
 ## Look-Ahead LR Parsers (LALR)
 LALR parsers are a compromise between SLR and Canonical LR parsers. They have the same number of states as SLR parsers but with the lookahead capability of LR(1) parsers, making them suitable for many real-world languages.
 
-# Comparison of SLR, CLR, and LALR Parsers
+## Comparison of SLR, CLR, and LALR Parsers
 
 | Feature                          | Simple LR (SLR) Parser                         | Canonical LR (CLR) Parser                    | Look-Ahead LR (LALR) Parser                  |
 |----------------------------------|------------------------------------------------|----------------------------------------------|----------------------------------------------|
