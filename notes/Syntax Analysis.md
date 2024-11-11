@@ -1,5 +1,4 @@
-
-# Syntax Analysis in Compiler Design
+# Syntax Analysis
 
 ## Introduction
 Syntax analysis, or parsing, is a fundamental stage in the compiler design process that interprets the structure of a program's source code. This phase organizes sequences of tokens—lexical elements produced by the lexical analysis phase—into a structured format called a parse tree or syntax tree. This tree reflects the grammatical structure of the code according to the rules of the programming language's grammar. Syntax analysis verifies that the input code adheres to syntactical rules, playing a critical role in translating source code into an intermediate or final executable form.
