@@ -71,29 +71,21 @@ Canonical LR parsers, also known as LR(1) parsers, use LR(1) items that provide 
 ## Look-Ahead LR Parsers (LALR)
 LALR parsers are a compromise between SLR and Canonical LR parsers. They have the same number of states as SLR parsers but with the lookahead capability of LR(1) parsers, making them suitable for many real-world languages.
 
+# Comparison of SLR, CLR, and LALR Parsers
+
 | Feature                          | Simple LR (SLR) Parser                         | Canonical LR (CLR) Parser                    | Look-Ahead LR (LALR) Parser                  |
-
 |----------------------------------|------------------------------------------------|----------------------------------------------|----------------------------------------------|
-
 | **Definition**                   | Uses LR(0) items and FOLLOW sets for parsing decisions. | Uses LR(1) items with one lookahead token for decisions. | Uses merged LR(1) items with minimal states similar to SLR but with lookahead like CLR. |
-
 | **Grammar Acceptance**           | Can parse a subset of LR(1) grammars, limited in handling conflicts. | Can parse all LR(1) grammars, including most programming languages. | Can parse most grammars parsable by CLR but with reduced states. |
-
 | **States**                       | Fewer states as it only uses LR(0) items.      | More states as each state includes a unique lookahead token for precision. | Fewer states compared to CLR due to merging, but more than SLR. |
-
 | **Parsing Table Size**           | Smaller parsing table due to fewer states.     | Larger parsing table due to distinct LR(1) states. | Moderate-sized parsing table, as it merges similar states with same lookaheads. |
-
 | **Conflicts**                    | Prone to conflicts in complex languages with overlapping rules. | Least prone to conflicts due to specific lookaheads. | Less prone to conflicts than SLR but may face some in very ambiguous grammars. |
-
 | **Handling Ambiguity**           | Limited ability to handle ambiguities without external adjustments. | Superior handling of ambiguities, especially with precedence and associativity rules. | Decent ambiguity handling by merging states, though less precise than CLR. |
-
 | **Implementation Complexity**    | Relatively simple to implement compared to CLR and LALR. | Most complex due to numerous states and specific lookahead processing. | Moderate complexity, balancing precision and state management. |
-
 | **Use in Compilers**             | Used in simpler languages or educational parsers where full LR(1) power is not required. | Used in sophisticated compiler implementations due to high precision. | Widely used in production compilers, balancing complexity and capability. |
-
 | **Error Detection and Recovery** | Basic error handling; less accurate due to fewer states. | Highly precise error detection, allowing for better error reporting. | Moderate error detection, better than SLR but less precise than CLR. |
-
 | **Example**                      | Suitable for simple language subsets like expression parsing. | Suitable for fully-featured languages requiring strict syntax checks. | Common in real-world programming languages (e.g., C, Java) for efficient parsing. |
+
 
 
 ## Using Ambiguous Grammars
