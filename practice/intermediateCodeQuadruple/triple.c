@@ -126,6 +126,7 @@ int main() {
                 second = pop();
                 first = pop();
                 printf("%c\t%c\t%c\n", postfix[i], first, second);
+                push(second);
             }
         }
     }
