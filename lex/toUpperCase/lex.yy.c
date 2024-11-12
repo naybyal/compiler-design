@@ -377,7 +377,7 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    4,    4,    4,    4,    4,    4,
         4,    4,    4,    4,    4,    4,    4,    4,    4,    4,
         4,    4,    4,    4,    4,    4,    4,    4,    4,    4,
-        4,    4,    4,    4,    4,    4,    4,    4,    4,    4,
+        1,    1,    1,    1,    1,    1,    4,    4,    4,    4,
 
         4,    4,    4,    4,    4,    4,    4,    4,    4,    4,
         4,    4,    4,    4,    4,    4,    4,    4,    4,    4,
@@ -441,14 +441,15 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "lex.l"
-#line 2 "lex.l"
-  #include <stdio.h>
-  #include <stdlib.h>
-  
-  int i;
-#line 451 "lex.yy.c"
+#line 1 "upper.l"
+#line 2 "upper.l"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+
 #line 452 "lex.yy.c"
+#line 453 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -665,10 +666,10 @@ YY_DECL
 		}
 
 	{
-#line 8 "lex.l"
+#line 10 "upper.l"
 
 
-#line 672 "lex.yy.c"
+#line 673 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -727,46 +728,42 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 10 "lex.l"
+#line 12 "upper.l"
 {
-  for (i=0; i<=yyleng; i++) {
-    if ((yytext[i] == 'a') && (yytext[i+1] == 'b') && (yytext[i+2] == 'c')) {
-      yytext[i] = 'A';
-      yytext[i+1] = 'B';
-      yytext[i+2] = 'C';
+    for (int i = 0; i < yyleng; i++) {
+        yytext[i] = toupper(yytext[i]);
     }
-  }
-  printf("\n%s\n", yytext);
+    printf("\n%s\n", yytext);
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 21 "lex.l"
+#line 19 "upper.l"
 {
     return 1;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 25 "lex.l"
+#line 23 "upper.l"
 {
-  ECHO;
+    ECHO;
 }
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 29 "lex.l"
+#line 27 "upper.l"
 {
-  printf("%s", yytext);
+    printf("\n%s\n", yytext);
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 33 "lex.l"
+#line 31 "upper.l"
 ECHO;
 	YY_BREAK
-#line 770 "lex.yy.c"
+#line 767 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1771,14 +1768,15 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 33 "lex.l"
+#line 31 "upper.l"
 
 
-int main() {
-  yylex();
+/*** C Code section ***/
+int main(void) {
+    yylex();
+    return 0;
 }
 
 int yywrap() {
-  return 1;
+    return 1;
 }
-
